@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { NavBar } from 'antd-mobile'
 import NavLinkBar from '../navlink/navlink'
 import Boss from '../../component/boss/boss'
@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
 
 	render() {
 		const { pathname } = this.props.location
-		console.log(pathname)
+		// console.log(pathname)
 		const user = this.props.user
 
 		const navList = [
@@ -57,14 +57,18 @@ class Dashboard extends React.Component {
 
 
 		return (
-			<div>
-				<NavBar mode="dark" className="fixed-header">
-					{navList.find(v => v.path===pathname).title}
-				</NavBar>
-				<div style={{marginTop: 45}}>
-					{navList.map( v => (
-						<Route key={v.icon} path={v.path} component={v.component}></Route>
-					))}
+			<div className="dashboard">
+				<div>
+					<NavBar mode="dark" className="fixed-header">
+						{navList.find(v => v.path===pathname).title}
+					</NavBar>
+				</div>
+				<div style={{marginTop: 50}}>
+					<Switch>
+						{navList.map( v => (
+							<Route key={v.icon} path={v.path} component={v.component}></Route>
+						))}
+					</Switch>
 				</div>
 
 				<NavLinkBar data={navList}></NavLinkBar>

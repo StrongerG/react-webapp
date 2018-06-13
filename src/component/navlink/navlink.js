@@ -16,21 +16,23 @@ class NavlinkBar extends React.Component {
 		const { pathname } = this.props.location
 
 		return (
-			<TabBar>
-				{navList.map( v => (
-					<TabBar.Item 
-						key={v.path} 
-						title={v.text}
-						icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-						selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
-						selected={pathname===v.path}
-						onPress={() => {
-							this.props.history.push(v.path)
-						}}
-					>
-					</TabBar.Item> 
-				))}
-			</TabBar>
+			<div>
+				<TabBar>
+					{navList.map( v => (
+						<TabBar.Item 
+							key={v.path} 
+							title={v.text}
+							icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
+							selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+							selected={pathname===v.path}
+							onPress={() => {
+								this.props.history.push(v.path)
+							}}
+						>
+						</TabBar.Item> 
+					))}
+				</TabBar>
+			</div>
 		)
 	}
 }
