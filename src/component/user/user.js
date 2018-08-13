@@ -1,29 +1,43 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Result, List, WhiteSpace, Button, WingBlank } from 'antd-mobile'
-// import browserCookie from 'browser-cookies'
+import { logoutSubmit } from '../../redux/user.redux'
+import { Result, List, WhiteSpace, Button, WingBlank, Modal } from 'antd-mobile'
+import browserCookie from 'browser-cookies'
+import { Redirect } from 'react-router-dom'
 
 @connect(
 	state => state.user,
+	{ logoutSubmit }
 )
 class User extends React.Component {
 
-	/*constructor(props) {
+	constructor(props) {
 		super(props)
-		// this.logtoout = this.logtoout.bind(this)
-	}*/
+		this.logOut = this.logOut.bind(this)
+	}
 
-	// logtoout() {
-	// 	console.log('logout')
-	// }
+	logOut() {
+		// browserCookie.erase('userid')
+		// window.location.href = window.location.href
+		// console.log('logout')
+		const alert = Modal.alert
+
+		alert('注销', '您确认要退出登入吗？', [
+			{ text: 'Cancel', onPress: () => console.log('cancel') },
+			{ text: 'Ok', onPress: () => {
+				browserCookie.erase('userid')
+				this.props.logoutSubmit()
+			} },
+		])
+	}
 
 	render() {
 
 		const props = this.props
 		const Item = List.Item
 		const Brief = Item.Brief
-		return props.user? 
-			(<div>
+		return props.user ?(
+			<div>
 				<Result
 					img={<img src={require(`../img/${props.avatar}.png`)} alt="avatar"/>}
 					title={props.user}
@@ -39,10 +53,10 @@ class User extends React.Component {
 				</List>
 				<WhiteSpace />
 				<WingBlank>
-				<Button onClick={() => console.log('logout')} type="primary">退出登入</Button>
+				<Button onClick={this.logOut} type="primary">退出登入</Button>
 				</WingBlank>
 			</div>
-		 ): null
+		 ): <Redirect to={props.redirectTo}></Redirect>
 	}
 }
 

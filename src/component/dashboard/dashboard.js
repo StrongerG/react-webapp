@@ -6,16 +6,22 @@ import NavLinkBar from '../navlink/navlink'
 import Boss from '../../component/boss/boss'
 import Genius from '../../component/genius/genius'
 import User from '../../component/user/user'
+import { getMsgList } from '../../redux/chat.redux'
 
 function Msg() {
 	return <div>msg</div>
 }
 
 @connect(
-	state => state
+	state => state,
+	{ getMsgList }
 )
 class Dashboard extends React.Component {
 
+	componentDidMount() {
+		this.props.getMsgList()
+		// this.props.recvMsg()
+	}
 	render() {
 		const { pathname } = this.props.location
 		// console.log(pathname)
@@ -54,8 +60,6 @@ class Dashboard extends React.Component {
 			}
 		]
 
-
-
 		return (
 			<div className="dashboard">
 				<div>
@@ -63,7 +67,7 @@ class Dashboard extends React.Component {
 						{navList.find(v => v.path===pathname).title}
 					</NavBar>
 				</div>
-				<div style={{marginTop: 50}}>
+				<div style={{ marginTop: "50px" }}>
 					<Switch>
 						{navList.map( v => (
 							<Route key={v.icon} path={v.path} component={v.component}></Route>

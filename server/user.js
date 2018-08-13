@@ -4,6 +4,7 @@ const utils =require('utility')
 const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
+const Chat = model.getModel('chat')
 //后端往前端传回数据时把password过滤掉 顺便把__v也过滤
 const _filter = {'pwd': 0, '__v': 0}
 
@@ -14,6 +15,27 @@ Router.get('/list', function(req, res) {
 	User.find({type}, function(err, doc) {
 		return res.json({code: 0, data: doc})
 	})
+})
+
+// Chat.remove({}, function(e, d) {
+// })
+
+Router.get('/getmsglist', function(req, res) {
+	const user = req.cookies.userid
+	// console.log(user)
+	User.find({}, function(e, userdoc) {
+		let users = {}
+		userdoc.forEach(v => {
+			users[v._id] = { name: v.user, avatar: v.avatar }
+		})
+		// 只查找 我发送的信息  和  我接受的信息
+		Chat.find({'$or': [{from: user}, {to: user}]}, function(err, doc) {
+			if (!err) {
+				return res.json({ code: 0, msgs: doc, users: users })
+			}
+		})
+	})
+	
 })
 
 Router.post('/update', function(req, res) {

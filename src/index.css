@@ -5,11 +5,11 @@
 	padding-top: 10px;
 }
 
-.am-tab-bar {
+.tabBarFix {
 	position: fixed;
+	height: 45px;
 	bottom: 0;
 	width: 100%;
-	height: 45px;
 }
 
 .fixed-header {
@@ -17,6 +17,7 @@
 	top: 0;
 	width: 100%;
 	height: 50px;
+	z-index: 10;
 }
 
 .page-content {
@@ -33,9 +34,14 @@
 }
 
 .stick-footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
 	z-index: 10;
 }
 
 .dashboard {
 	position: relative;
+	height: 100vh;
 }
+

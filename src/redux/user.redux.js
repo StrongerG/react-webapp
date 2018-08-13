@@ -8,6 +8,7 @@ const LOAD_DATA = 'LOAD_DATA'
 /*const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'*/
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
+const LOGOUT = 'LOGOUT'
 
 const initState = {
 	redirectTo: '',
@@ -31,6 +32,8 @@ export function user(state=initState, action) {
 			return {...state, ...action.payload}
 		case AUTH_SUCCESS:
 			return {...state, msg: '', redirectTo: getRedirectPath(action.payload), ...action.payload}
+		case LOGOUT:
+			return {...initState, redirectTo: '/login'}
 		default: 
 			return state
 	}
@@ -109,4 +112,8 @@ export function register({user, pwd, repeatpwd, type}) {
 			}
 		})
 	}
+}
+
+export function logoutSubmit() {
+	return { type: LOGOUT }
 }
