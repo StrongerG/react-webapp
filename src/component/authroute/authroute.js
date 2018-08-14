@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 @withRouter
 @connect(
-	null,
+	state => state.user,
 	{ loadData }
 )
 class AuthRoute extends React.Component {
@@ -17,6 +17,7 @@ class AuthRoute extends React.Component {
 		if (publicList.indexOf(pathname) > -1) {
 			return null
 		}
+
 		//获取用户信息
 		axios.get('/user/info').then(
 			res => {
